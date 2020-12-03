@@ -160,7 +160,7 @@ func parseResponseWeather(body []byte) string {
 	if err != nil {
 		panic(err)
 	}
-	var message = "\n" + s.Name + " (" + s.Sys.Country + ") " + s.Weather[0].Description + ". 🌡  Temperature (ºC) " + fmt.Sprintf("%.0f", toCelsius(s.Main.Temp)) + ". Feels like " + fmt.Sprintf("%.0f", toCelsius(s.Main.FeelsLike)) + " (L " + fmt.Sprintf("%.0f", toCelsius(s.Main.TempL)) + " - H " + fmt.Sprintf("%.0f", toCelsius(s.Main.TempMax)) + "), " + fmt.Sprintf("%2d", s.Main.Humidity) + " humidity. "
+	var message = "\n" + s.Name + " (" + s.Sys.Country + ") " + s.Weather[0].Description + ". 🌡  Temperature (ºC) " + fmt.Sprintf("%.0f", toCelsius(s.Main.Temp)) + ". Feels like " + fmt.Sprintf("%.0f", toCelsius(s.Main.FeelsLike)) + " (L " + fmt.Sprintf("%.0f", toCelsius(s.Main.TempMin)) + " - H " + fmt.Sprintf("%.0f", toCelsius(s.Main.TempMax)) + "), " + fmt.Sprintf("%2d", s.Main.Humidity) + " humidity. "
 	return message
 }
 
