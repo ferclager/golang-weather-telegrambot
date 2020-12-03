@@ -114,7 +114,7 @@ type WeatherAPIResponse struct {
 
 func main() {
 	now := time.Now()
-	message := "WeatherBot " + now.Format(time.Kitchen) + "\n" + callAPI("weather") + callAPI("forecast")
+	message := "WeatherBot " + now.Format(time.Kitchen) + callAPI("weather") + callAPI("forecast")
 	fmt.Printf(message)
 	sendMessage(message)
 }
@@ -160,7 +160,7 @@ func parseResponseWeather(body []byte) string {
 	if err != nil {
 		panic(err)
 	}
-	var message = s.Name + " (" + s.Sys.Country + ") " + s.Weather[0].Description + ". 🌡  Temperature (ºC) " + fmt.Sprintf("%.2f", toCelsius(s.Main.Temp)) + " (min " + fmt.Sprintf("%.2f", toCelsius(s.Main.TempMin)) + " - max " + fmt.Sprintf("%.2f", toCelsius(s.Main.TempMax)) + "). Feels like " + fmt.Sprintf("%.2f", toCelsius(s.Main.FeelsLike)) + ", " + fmt.Sprintf("%2d", s.Main.Humidity) + " humidity. "
+	var message = "\n" + s.Name + " (" + s.Sys.Country + ") " + s.Weather[0].Description + ". 🌡  Temperature (ºC) " + fmt.Sprintf("%.0f", toCelsius(s.Main.Temp)) + ". Feels like " + fmt.Sprintf("%.0f", toCelsius(s.Main.FeelsLike)) + " (L " + fmt.Sprintf("%.0f", toCelsius(s.Main.TempL)) + " - H " + fmt.Sprintf("%.0f", toCelsius(s.Main.TempMax)) + "), " + fmt.Sprintf("%2d", s.Main.Humidity) + " humidity. "
 	return message
 }
 
@@ -172,12 +172,12 @@ func parseResponseForecast(body []byte) string {
 	}
 	var message = ""
 	for _, value := range s.List[0:MAX] {
-		var partialMessage = " ⌚️ " + value.DtTxt + " " + value.Weather[0].Description + ". 🌡  Temperature (ºC) " + fmt.Sprintf("%.2f", toCelsius(value.Main.Temp)) + " (min " + fmt.Sprintf("%.2f", toCelsius(value.Main.TempMin)) + " - max " + fmt.Sprintf("%.2f", toCelsius(value.Main.TempMax)) + "). Feels like " + fmt.Sprintf("%.2f", toCelsius(value.Main.FeelsLike)) + ", " + fmt.Sprintf("%2d", value.Main.Humidity) + " humidity."
+		var partialMessage = " ⌚️ " + value.DtTxt + " " + value.Weather[0].Description + ". 🌡  Temperature (ºC) " + fmt.Sprintf("%.0f", toCelsius(value.Main.Temp)) + ". Feels like " + fmt.Sprintf("%.0f", toCelsius(value.Main.FeelsLike)) + " (L " + fmt.Sprintf("%.0f", toCelsius(value.Main.TempMin)) + " - H " + fmt.Sprintf("%.0f", toCelsius(value.Main.TempMax)) + "), " + fmt.Sprintf("%2d", value.Main.Humidity) + " humidity."
 		message += "\n" + partialMessage
 	}
 	return message
 }
 
 func toCelsius(kelvin float64) float64 {
-	return (kelvin - 273.15)
+	return math.Round(kelvin - 273.15)
 }
