@@ -2,24 +2,26 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
+	"log"
+	"math"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
+
+	"github.com/joho/godotenv"
 )
 
-const KEY_WEATHER = "YOUR_KEY"
-const ID_CITY = "3530597" //EXAMPLE: MEXICO CITY
-const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"
-const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"
 const MAX = 3
 
 var cities = map[string]string{
-	"Madrid":         "3117735",
-	"MexicoCity":     "3530597",
-	"NewYork":        "5128581",
-	"Toronto":        "6167865",
+	"Madrid":     "3117735",
+	"MexicoCity": "3530597",
+	"NewYork":    "5128581",
+	"Toronto":    "6167865",
 }
 
 type ForecastAPIResponse struct {
@@ -120,41 +122,49 @@ type WeatherAPIResponse struct {
 }
 
 func main() {
-	args := os.Args
-	if len(args) != 2 {
-		fmt.Printf("You have to inform 2 arguments: CityName [" + getStrCities(cities) + "] and request [W|F|WF]")
-	} else {
-		var idCity = cities[args[1]]
-		if idCity != "" {
-			now := time.Now()
-			option := args[2]
-			message := "WeatherBot " + now.Format(time.Kitchen)
-			switch option {
-			case "W":
-				message += callAPI("weather", idCity)
-			case "F":
-				message += callAPI("forecast", idCity)
-			case "WF":
-				message += callAPI("weather", idCity) + callAPI("forecast", idCity)
-			default:
-				message = ""
-			}
-			if message != "" {
-				sendMessage(message)
-			}
+
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	KEY_WEATHER := os.Getenv("KEY_WEATHER")
+	TELEGRAM_BOT_TOKEN := os.Getenv("TELEGRAM_BOT_TOKEN")
+	TELEGRAM_CHAT_ID := os.Getenv("TELEGRAM_CHAT_ID")
+
+	cityName := *flag.String("cityName", "MexicoCity", "City")
+	option := *flag.String("request", "WF", "Type")
+	flag.Parse()
+
+	var idCity = cities[cityName]
+	if idCity != "" {
+		now := time.Now()
+		message := "WeatherBot " + now.Format(time.Kitchen)
+		switch option {
+		case "W":
+			message += callAPI(KEY_WEATHER, "weather", idCity)
+		case "F":
+			message += callAPI(KEY_WEATHER, "forecast", idCity)
+		case "WF":
+			message += callAPI(KEY_WEATHER, "weather", idCity) + callAPI(KEY_WEATHER, "forecast", idCity)
+		default:
+			message = ""
+		}
+		if message != "" {
+			sendMessage(TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, message)
 		}
 	}
 }
 
-func callAPI(endPoint string) string {
-	url := "https://api.openweathermap.org/data/2.5/" + endPoint + "?id=" + ID_CITY + "&APPID=" + KEY_WEATHER + "&lang=en"
+func callAPI(key string, endPoint string, idCity string) string {
+	url := "https://api.openweathermap.org/data/2.5/" + endPoint + "?id=" + idCity + "&APPID=" + key + "&lang=en"
 	resp, err := http.Get(url)
 	if err != nil {
 		panic(err)
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		panic("Request was not OK: " + resp.Status)
+		panic("Weather request was not OK: " + resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -169,15 +179,15 @@ func callAPI(endPoint string) string {
 	return result
 }
 
-func sendMessage(message string) {
-	url := "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage?chat_id=" + TELEGRAM_CHAT_ID + "&text=" + url.QueryEscape(message)
+func sendMessage(telBotToken string, telChat string, message string) {
+	url := "https://api.telegram.org/bot" + telBotToken + "/sendMessage?chat_id=" + telChat + "&text=" + url.QueryEscape(message)
 	resp, err := http.Get(url)
 	if err != nil {
 		panic(err)
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		panic("Request was not OK: " + resp.Status)
+		panic("Telegram request was not OK: " + resp.Status)
 	}
 }
 
@@ -208,7 +218,6 @@ func parseResponseForecast(body []byte) string {
 func toCelsius(kelvin float64) float64 {
 	return math.Round(kelvin - 273.15)
 }
-
 
 func getStrCities(cities map[string]string) string {
 	var message = ""
