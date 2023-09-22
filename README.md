@@ -1,2 +1,1 @@
-# golangWeatherTelegramBot
-Telegram API: Building a weather bot in golang
+# Building a weather Telegram Bot using golang
