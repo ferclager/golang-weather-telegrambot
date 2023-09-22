@@ -6,9 +6,9 @@ All you will need to start is:
 * Your OpenWeatherMap city ID; for example, Mexico City 3530597.
 * Configure your enviroment (file .env)
 ```
-	KEY_WEATHER = "YOUR_KEY"
-	ID_CITY = "3530597" //EXAMPLE: MEXICO CITY
-	TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"
-	TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"
+	KEY_WEATHER=YOUR_KEY
+	ID_CITY=3530597 //EXAMPLE: MEXICO CITY
+	TELEGRAM_BOT_TOKEN="YOUR_BOT_TOKEN"
+	TELEGRAM_CHAT_ID="YOUR_CHAT_ID"
 ```
 Now, just use your own information and run the code. Enjoy it!
