@@ -13,7 +13,7 @@ const KEY_WEATHER = "YOUR_KEY"
 const ID_CITY = "3530597" //EXAMPLE: MEXICO CITY
 const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"
 const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"
-const MAX = 9
+const MAX = 3
 
 type ForecastAPIResponse struct {
 	Cod     string `json:"cod"`
