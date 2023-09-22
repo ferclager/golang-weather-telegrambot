@@ -15,6 +15,13 @@ const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"
 const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"
 const MAX = 3
 
+var cities = map[string]string{
+	"Madrid":         "3117735",
+	"MexicoCity":     "3530597",
+	"NewYork":        "5128581",
+	"Toronto":        "6167865",
+}
+
 type ForecastAPIResponse struct {
 	Cod     string `json:"cod"`
 	Message int    `json:"message"`
@@ -113,10 +120,30 @@ type WeatherAPIResponse struct {
 }
 
 func main() {
-	now := time.Now()
-	message := "WeatherBot " + now.Format(time.Kitchen) + callAPI("weather") + callAPI("forecast")
-	fmt.Printf(message)
-	sendMessage(message)
+	args := os.Args
+	if len(args) != 2 {
+		fmt.Printf("You have to inform 2 arguments: CityName [" + getStrCities(cities) + "] and request [W|F|WF]")
+	} else {
+		var idCity = cities[args[1]]
+		if idCity != "" {
+			now := time.Now()
+			option := args[2]
+			message := "WeatherBot " + now.Format(time.Kitchen)
+			switch option {
+			case "W":
+				message += callAPI("weather", idCity)
+			case "F":
+				message += callAPI("forecast", idCity)
+			case "WF":
+				message += callAPI("weather", idCity) + callAPI("forecast", idCity)
+			default:
+				message = ""
+			}
+			if message != "" {
+				sendMessage(message)
+			}
+		}
+	}
 }
 
 func callAPI(endPoint string) string {
@@ -180,4 +207,14 @@ func parseResponseForecast(body []byte) string {
 
 func toCelsius(kelvin float64) float64 {
 	return math.Round(kelvin - 273.15)
+}
+
+
+func getStrCities(cities map[string]string) string {
+	var message = ""
+	for key, _ := range cities {
+		message += key + "|"
+	}
+	message = message[0 : len(message)-1]
+	return message
 }
