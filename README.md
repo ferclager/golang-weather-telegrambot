@@ -11,3 +11,7 @@ All you will need to start is:
 	TELEGRAM_CHAT_ID=YOUR_CHAT_ID
 ```
 Now, just use your own information and run the code. Enjoy it!
+Example:
+```
+go run weatherBot.go -cityName=MexicoCity -request=WF
+```
