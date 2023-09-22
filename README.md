@@ -7,7 +7,7 @@ All you will need to start is:
 * Configure your enviroment (file .env)
 ```
 	KEY_WEATHER=YOUR_KEY
-	TELEGRAM_BOT_TOKEN="YOUR_BOT_TOKEN"
-	TELEGRAM_CHAT_ID="YOUR_CHAT_ID"
+	TELEGRAM_BOT_TOKEN=YOUR_BOT_TOKEN
+	TELEGRAM_CHAT_ID=YOUR_CHAT_ID
 ```
 Now, just use your own information and run the code. Enjoy it!
