@@ -1,0 +1,5 @@
+remote_theme: pages-themes/hacker@v0.2.0
+plugins:
+- jekyll-remote-theme # add this line to the plugins list if you already have one
+title: Golang Weather Telegram Bot
+description: This is the webpage for the repository that contains the code for building a Weather Telegram Bot using Golang.
