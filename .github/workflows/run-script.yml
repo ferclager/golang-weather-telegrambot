@@ -1,10 +1,8 @@
 name: Go Weather Bot
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  schedule:
+    - cron: '30 13 * * *'
 
 jobs:
 
