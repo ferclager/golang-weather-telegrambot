@@ -37,15 +37,15 @@ func main() {
 	TELEGRAM_BOT_TOKEN := os.Getenv("TELEGRAM_BOT_TOKEN")
 	TELEGRAM_CHAT_ID := os.Getenv("TELEGRAM_CHAT_ID")
 
-	cityName := *flag.String("cityName", "MexicoCity", "City")
-	option := *flag.String("request", "WF", "Type")
+	cityName := flag.String("cityName", "MexicoCity", "City")
+	option := flag.String("request", "WF", "Type")
 	flag.Parse()
 
-	var idCity = cities[cityName]
+	var idCity = cities[*cityName]
 	if idCity != "" {
 		now := time.Now()
 		message := "WeatherBot " + now.Format(time.Kitchen)
-		switch option {
+		switch *option {
 		case "W":
 			message += callAPI(KEY_WEATHER, "weather", idCity)
 		case "F":
