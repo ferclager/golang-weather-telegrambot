@@ -19,7 +19,7 @@ To use the Weather Telegram Bot, follow these steps:
 * Clone the repository:
 
 ```bash
-	git clone https://github.com/your-username/golangWeatherTelegramBot.git
+	git clone git@github.com:ferclager/golang-weather-telegrambot.git
 ``````
 * Navigate to the project directory:
 ```bash
