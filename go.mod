@@ -1,5 +1,5 @@
-module github.com/ferclager/golangWeatherTelegramBot
+module github.com/ferclager/golang-weather-telegrambot
 
-go 1.19
+go 1.23
 
-require github.com/joho/godotenv v1.4.0 // indirect
+require github.com/joho/godotenv v1.5.0 // indirect
