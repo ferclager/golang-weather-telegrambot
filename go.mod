@@ -1,4 +1,4 @@
-module github.com/frclager/golangWeatherTelegramBot
+module github.com/ferclager/golangWeatherTelegramBot
 
 go 1.19
 
