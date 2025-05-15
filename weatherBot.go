@@ -21,8 +21,11 @@ const MAX = 3
 
 var cities = map[string]string{
 	"Madrid":     "3117735",
+	"Ubeda":      "2510116",
 	"MexicoCity": "3530597",
 	"NewYork":    "5128581",
+	"Detroit":	  "4990729",
+	"Houston":	  "5194369",
 	"Toronto":    "6167865",
 }
 
