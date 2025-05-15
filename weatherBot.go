@@ -12,7 +12,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/frclager/golangWeatherTelegramBot/models"
+	"github.com/ferclager/golang-weather-telegrambot/models"
 
 	"github.com/joho/godotenv"
 )
