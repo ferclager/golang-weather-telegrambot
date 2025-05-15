@@ -4,7 +4,7 @@ This repository contains the code for building a Weather Telegram Bot using Gola
 ## Prerequisites
 Before you begin, make sure you have the following:
 * **Telegram Bot**: create a Telegram bot by following the instructions [here](https://core.telegram.org/bots).
-* **Telegram Chat ID**: obtain the chat ID from your bot. Refer to [this guide](https://core.telegram.org/bots#3-how-do-i-create-a-bot) for more information.
+* **Telegram Chat ID**: obtain the chat ID from your bot. Refer to [this guide](https://core.telegram.org/bots#3-how-do-i-create-a-bot) for more information. Also you can GET it from https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates, and see more recent chats.
 * **OpenWeatherMap API Token**: register on the OpenWeatherMap website to obtain an API token. Visit [here](https://openweathermap.org/appid) to register and get your API token.
 * **OpenWeatherMap City ID**: find the city ID for your desired location on the OpenWeatherMap website. For example, the city ID for Mexico City is 3530597.
 
