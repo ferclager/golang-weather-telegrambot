@@ -8,7 +8,7 @@ Before you begin, make sure you have the following:
 * **OpenWeatherMap API Token**: register on the OpenWeatherMap website to obtain an API token. Visit [here](https://openweathermap.org/appid) to register and get your API token.
 * **OpenWeatherMap City ID**: find the city ID for your desired location on the OpenWeatherMap website. For example, the city ID for Mexico City is 3530597.
 
-* **Configuration**: configure your enviroment (file .env)
+* **Configuration**: configure your environment (file .env)
 ```.env
 		KEY_WEATHER=YOUR_KEY
 		TELEGRAM_BOT_TOKEN=YOUR_BOT_TOKEN
@@ -20,11 +20,11 @@ To use the Weather Telegram Bot, follow these steps:
 
 ```bash
 	git clone git@github.com:ferclager/golang-weather-telegrambot.git
-``````
+```
 * Navigate to the project directory:
 ```bash
-	cd golang-weather-telegramBot
-````
+	cd golang-weather-telegrambot
+```
 * Run the `weatherBot.go` file with your own information. For example, to get the weather forecast for Mexico City, run the following command:
 ```go
 	go run weatherBot.go -cityName=MexicoCity -request=WF
